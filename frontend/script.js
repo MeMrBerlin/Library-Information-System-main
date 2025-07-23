@@ -20,7 +20,7 @@ let others = document.getElementById("other");
 
 let editIndex = -1;
 
-// Adding Books
+//! Adding Books
 libraryForm.addEventListener("submit", (e) => {
   e.preventDefault();
   const isValidUrl = (urlString) => {
@@ -109,33 +109,6 @@ libraryForm.addEventListener("submit", (e) => {
     type = "other";
   }
 
-  // let shelf = localStorage.getItem("shelfOfBooks");
-
-  // let objOfBook; //object which stores books
-  // let alreadyAdded = false;
-
-  // // Check if the book is already in the library
-  // if (shelf == null) {
-  //   objOfBook = [];
-  // } else {
-  //   //We might have multiple books
-  //   objOfBook = JSON.parse(shelf); //By using JSON we convert it into Object
-
-  //   objOfBook.every((bookObj) => {
-  //     if (author === "") author = "Unknown";
-  //     let curBook = name === bookObj.book;
-  //     let curAuthor = author === bookObj.bookauthor;
-  //     let curBookType = type === bookObj.bookType;
-
-  //     if (curBook && curAuthor && curBookType) {
-  //       console.log("already added!");
-  //       alreadyAdded = true;
-  //       return false;
-  //     }
-  //     return true;
-  //   });
-  // }
-
   let shelf = localStorage.getItem("shelfOfBooks");
 
   let objOfBook; //object which stores books
@@ -148,7 +121,7 @@ libraryForm.addEventListener("submit", (e) => {
     //We might have multiple books
     objOfBook = JSON.parse(shelf); //By using JSON we convert it into Object
 
-    // Function to search for a book by name
+    //! Function to search for a book by name
     function searchBookByName(bookName) {
       return objOfBook.find((bookObj) => bookObj.book === bookName);
     }
@@ -171,7 +144,7 @@ libraryForm.addEventListener("submit", (e) => {
   const searchButton = document.getElementById("searchButton");
   searchButton.addEventListener("click", searchBook);
 
-  // Function to handle the search when the user clicks the "Search" button
+  //! Function to handle the search when the user clicks the "Search" button
   function searchBook() {
     let searchInput = document.getElementById("searchText");
     alert(searchInput);
@@ -276,7 +249,7 @@ function editBook(index) {
   name.focus();
 }
 
-//Function to show elements(books) from LocalStorage
+//! Function to show elements(books) from LocalStorage
 function displayBooks() {
   let books = localStorage.getItem("shelfOfBooks");
   let clearBtn = document.getElementById("clear");
@@ -390,8 +363,82 @@ function displayBooks() {
   libraryForm.reset();
 }
 
-//Show adding message
+//! Function to show books from backend
+// async function displayBooks() {
+//   const userEmail = localStorage.getItem("userEmail");
+//   const clearBtn = document.getElementById("clear");
+//   const table = document.getElementById("tableBody");
+//   const noDisplayMsg = document.getElementById("emptyMsg");
 
+//   if (!userEmail) {
+//     noDisplayMsg.innerHTML = "Please log in to see your books.";
+//     table.innerHTML = "";
+//     clearBtn.style.display = "none";
+//     return;
+//   }
+
+//   try {
+//     const res = await fetch("http://localhost:3000/books");
+//     const allBooks = await res.json();
+
+//     // Filter books by current logged-in user
+//     const books = allBooks.filter((book) => book.userEmail === userEmail);
+
+//     if (books.length === 0) {
+//       noDisplayMsg.innerHTML = `Nothing to display! Use "Add book" above to add books.`;
+//       table.innerHTML = "";
+//       clearBtn.style.display = "none";
+//       return;
+//     }
+
+//     let html = "";
+//     books.forEach((book, index) => {
+//       html += `
+//         <tr class="rows">
+//           <th scope="row">${index + 1}</th>
+//           <td class="name"><a class="bookurl" href="${book.bookurl}">${
+//         book.book
+//       }</a></td>
+//           <td class="author">${book.bookauthor}</td>
+//           <td class="type">${book.bookType}</td>
+//           <td class="isbn">${book.bookisbn}</td>
+//           <td class="edition">${book.bookedition}</td>
+//           <td class="publicationdate">${book.bookpublication}</td>
+//           <td class="type">
+//             <label class="switch">
+//               <input type="checkbox" ${
+//                 book.readStatus ? "checked" : ""
+//               } disabled>
+//               <span class="slider round"></span>
+//             </label>
+//           </td>
+//           <td class="fav">
+//             <label class="switch">
+//               <input type="checkbox" ${book.favorite ? "checked" : ""} disabled>
+//               <span class="slider round"></span>
+//             </label>
+//           </td>
+//           <td class="icon"><i class="fa fa-times" onclick="removeBook(${
+//             book.id
+//           })"></i></td>
+//           <td class="icon"><i class="fa fa-edit" onclick="editBook(${
+//             book.id
+//           })"></i></td>
+//         </tr>`;
+//     });
+
+//     table.innerHTML = html;
+//     clearBtn.style.display = "block";
+//     noDisplayMsg.innerHTML = "";
+//   } catch (err) {
+//     console.error("Error fetching books:", err);
+//     noDisplayMsg.innerHTML = "Failed to load books.";
+//   }
+
+//   document.getElementById("libraryForm").reset();
+// }
+
+//! Show adding message
 function addMessage(edited = false) {
   let message = document.getElementById("message");
   let navbar = document.getElementById("navbar");
@@ -418,7 +465,7 @@ function addMessage(edited = false) {
   }, 2000);
 }
 
-//Show error message
+//! Show error message
 function errorMessage() {
   let message = document.getElementById("message");
   let navbar = document.getElementById("navbar");
@@ -437,7 +484,7 @@ function errorMessage() {
   }, 2000);
 }
 
-//Show alreadyAdded message
+//! Show alreadyAdded message
 function alreadyAddedMessage() {
   let message = document.getElementById("message");
   let navbar = document.getElementById("navbar");
@@ -460,7 +507,7 @@ function alreadyAddedMessage() {
   }, 2000);
 }
 
-//Show clear message
+//! Show clear message
 function clearMessage() {
   let message = document.getElementById("message");
   let navbar = document.getElementById("navbar");
@@ -480,14 +527,14 @@ function clearMessage() {
   }, 2000);
 }
 
-// Refresh the page
+//! Refresh the page
 function refreshPage() {
   setTimeout(() => {
     window.location.reload();
   }, 2050);
 }
 
-// Update the display of books on deletion
+//! Update the display of books on deletion
 function updateDisplayAfterDelete() {
   localStorage.removeItem("shelfOfBooks");
   localStorage.removeItem("getBookNumber");
@@ -504,14 +551,14 @@ function updateDisplayAfterDelete() {
   refreshPage();
 }
 
-// Clearning shelf (Deleting all books)
+//! Clearing shelf (Deleting all books)
 let clearBtn = document.getElementById("clear");
 
 clearBtn.addEventListener("click", () => {
   updateDisplayAfterDelete();
 });
 
-// Remove specific book from shelf
+//! Remove specific book from shelf
 function removeBook(index) {
   console.log("Delete book " + index);
 
@@ -547,7 +594,7 @@ function removeBook(index) {
   }
 }
 
-//Searching book by bookname, author and type
+//! Searching book by bookname, author and type
 let searchNote = document.getElementById("searchText");
 searchNote.addEventListener("input", function () {
   let search = searchNote.value.toLowerCase();
@@ -579,7 +626,7 @@ searchNote.addEventListener("input", function () {
   });
 });
 
-// Update Number of books in Shelf section
+//! Update Number of books in Shelf section
 function UpdateBook() {
   const bookNumber = parseInt(localStorage.getItem("getBookNumber"));
   const booksCount = bookNumber ? bookNumber + 1 : 1;
@@ -589,8 +636,7 @@ function UpdateBook() {
   document.getElementById("books").innerHTML = updateBooksCountSentence;
 }
 
-//Show Number of books in Shelf section
-
+//! Show Number of books in Shelf section
 const showNumberOfBooks = () => {
   const getBookNumber = parseInt(localStorage.getItem("getBookNumber"));
   document.getElementById("books").innerHTML = `No. of books: ${
@@ -598,7 +644,7 @@ const showNumberOfBooks = () => {
   }`;
 };
 
-// Filter books based on selected attributes from dropdown
+//! Filter books based on selected attributes from dropdown
 let filterDropdown = document.getElementById("filter-books");
 function filterBooks() {
   let books = JSON.parse(localStorage.getItem("shelfOfBooks"));
@@ -608,23 +654,6 @@ function filterBooks() {
   let html = "";
   let index = 0;
   let filteredBooks;
-  // if (filterBy === "all") {
-  //   filteredBooks = books.filter((book) => {
-  //     return (
-  //       book.book.toLowerCase().includes(searchNote.value.toLowerCase()) ||
-  //       book.bookauthor
-  //         .toLowerCase()
-  //         .includes(searchNote.value.toLowerCase()) ||
-  //       book.bookType.toLowerCase().includes(searchNote.value.toLowerCase())
-  //     );
-  //   });
-  // } else {
-  //   filteredBooks = books.filter((book) => {
-  //     return book[filterBy]
-  //       .toLowerCase()
-  //       .includes(searchNote.value.toLowerCase());
-  //   });
-  // }
 
   if (filteredBooks.length > 0) {
     filteredBooks.forEach((filteredBook) => {
@@ -684,7 +713,7 @@ radioButtons.forEach((btn) => {
   });
 });
 
-// dark mode
+//! dark mode
 var icon = document.querySelector("#icon");
 var head1 = document.getElementById("subHead1");
 var head2 = document.getElementById("subHead2");
